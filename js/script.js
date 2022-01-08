@@ -39,12 +39,92 @@ document.getElementById('design').addEventListener('click', (e) =>{
     
 });
 
-const activities = document.getElementsByClassName('activities');
-const paymentMethod = document.getElementsByClassName('payment-method-box');
-let totalCost = 0; 
+// const activities = document.getElementById('activities');
+// // console.log(activities);
+// const paymentMethod = document.getElementById('payment');
+// let totalCost = 0; 
+// const checkboxes = document.querySelectorAll('input[type=checkbox]');
+// const finalCostDisplay = document.getElementById('activities-cost')
 
-// activities.addEventListener('change', (e){
-//     let cost = e.target.getA
+// code testing area -----------------------------------
 
+// checkboxes[1].disabled = true;
+// checkboxes[1].parentNode.classList.add('disabled');
+// const cost = checkboxes[0].getAttribute('data-cost');
+// console.log(dateTime);
+// --------------------------------------------------------------------
+
+//Register for Activities Section
+
+// activities.addEventListener('change', (e) =>{
+// // let selectedActivity = e.target;
+// let selectedActivityCost = parseInt(e.target.getAttribute('data-cost'));
+
+// if(e.target.checked == true){
+//     totalCost += selectedActivityCost;
+//     // console.log(totalCost);
+//     for(let i = 0; i < checkboxes.length ; i++){
+//         // disabled overlapping activities
+//         if(e.target.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-ant-time')){
+//             // checkboxes[i].parentElement.classList.add('disabled');
+//             checkboxes[i].disabled = true;
+//             e.target.parentElement.classList.remove('disabled');
+//             e.target.disabled = false;
+//         }
+//     }
+// } else if (e.target.checked == false){
+//     totalCost -= selectedActivityCost;
+//     for(let i = 0 ; i < checkboxes.length ; i++){
+//         if(e.target.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-ant-time')){
+//             checkboxes[i].parentElement.classList.remove('disabled');
+//             checkboxes[i].disabled = false; 
+//         }
+//     }
+
+// }
+
+//    // formatCost();
+//    finalCostDisplay.innerHTML = `Total: $${totalCost}`;
+      
+// //    activitiesValidate(e); 
 
 // });
+
+
+const allActivities = document.getElementById('activities');
+// console.log(allActivities);
+const finalCostDisplay = document.querySelector('#activities-cost');
+const checkboxes = document.querySelectorAll('input[type=checkbox]');
+let totalCost = 0;
+
+allActivities.addEventListener('change', (e) => {
+    let selectedActivity = e.target;
+    const activityCost = parseInt(selectedActivity.getAttribute('data-cost'));
+
+    if (selectedActivity.checked == true) {
+        totalCost += activityCost;
+        for (let i = 0; i < checkboxes.length; i++) {
+            // Hide overlapping activities
+            if (selectedActivity.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-and-time') ) {
+                selectedActivity.disabled = false;
+                selectedActivity.parentNode.classList.remove('disabled');
+                checkboxes[i].disabled = true;
+                checkboxes[i].parentNode.classList.add('disabled');                              
+            }
+        }
+    } else if (selectedActivity.checked == false) {
+        totalCost -= activityCost;
+        // Unhide overlpapping activities
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (selectedActivity.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-and-time') ) {
+                checkboxes[i].disabled = false;
+                checkboxes[i].parentNode.classList.remove('disabled');               
+            }
+        }
+    }
+    // Display total cost 
+    finalCostDisplay.innerHTML = `Total: $${totalCost}`;
+      
+    // activitiesValidate(e);
+
+});
