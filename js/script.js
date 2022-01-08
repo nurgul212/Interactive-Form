@@ -8,7 +8,7 @@ otherOption.style.display='none';
 
 // display #other-job-role "text field" when "other" option is selected
 // * The 'change' event occurs when the element has completed changing
-document.getElementById('title').addEventListener('click', (e)=>{
+document.getElementById('title').addEventListener('change', (e)=>{
     if(e.target.value === 'other'){
         otherOption.style.display = 'block';
     } else {
@@ -25,7 +25,7 @@ colors.disabled = true;
 
 // display the color options associated with the design, for example if user selects 'Theme-JS Puns', 
 // make the colors of (JS puns shirt only) is available to choose, etc
-document.getElementById('design').addEventListener('click', (e) =>{
+document.getElementById('design').addEventListener('change', (e) =>{
     colors.disabled = false;
     for(let i = 0 ; i < colors.length; i++){
         // conditional (Ternary Operator)
@@ -44,7 +44,7 @@ document.getElementById('design').addEventListener('click', (e) =>{
 const allActivities = document.getElementById('activities');
 // console.log(allActivities);
 const finalCostDisplay = document.querySelector('#activities-cost');
-const checkboxes = document.querySelectorAll('input[type=checkbox]');
+const checkboxes = allActivities.querySelectorAll('input[type=checkbox]');
 let totalCost = 0;
 
 allActivities.addEventListener('change', (e) => {
@@ -56,10 +56,11 @@ allActivities.addEventListener('change', (e) => {
         for (let i = 0; i < checkboxes.length; i++) {
             // Hide overlapping activities
             if (selectedActivity.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-and-time') ) {
+                checkboxes[i].disabled = true;
+                checkboxes[i].parentNode.classList.add('disabled');      
                 selectedActivity.disabled = false;
                 selectedActivity.parentNode.classList.remove('disabled');
-                checkboxes[i].disabled = true;
-                checkboxes[i].parentNode.classList.add('disabled');                              
+                                       
             }
         }
     } else if (selectedActivity.checked == false) {
@@ -73,7 +74,21 @@ allActivities.addEventListener('change', (e) => {
         }
     }
     // Display total cost 
-    finalCostDisplay.innerHTML = `Total: $${totalCost}`;
-      
+    finalCostDisplay.innerHTML = `Total: $${totalCost}`;     
 
 });
+
+// Payment Info Section --------------------------------------------------------------------
+const paymentOptions = document.getElementById('payment');
+// console.log(paymentOptions[0].value)
+//The credit card payment option should be selected for the user by default.
+for(let i = 0; i < paymentOptions.length; i++){
+    if(paymentOptions[i].value == 'credit-card'){
+        paymentOptions[i].hidden = false;
+    }else {
+        paymentOptions[i].hidden = true;
+    }
+}
+
+
+
