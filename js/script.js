@@ -1,4 +1,4 @@
-
+// Badic info section ----------------------------------------------------------------------
 // Use focus() method for the "Name" field 
 document.getElementById('name').focus();
 
@@ -16,6 +16,7 @@ document.getElementById('title').addEventListener('click', (e)=>{
     }
 });
 
+// T-Short info section -------------------------------------------------------------------------
 // "Color" drop down menu are not available for each t-shirt when the form first loads
 const colors = document.getElementById('color');
 // console.log(colors.value);  returns 'Select a design theme above'
@@ -39,58 +40,7 @@ document.getElementById('design').addEventListener('click', (e) =>{
     
 });
 
-// const activities = document.getElementById('activities');
-// // console.log(activities);
-// const paymentMethod = document.getElementById('payment');
-// let totalCost = 0; 
-// const checkboxes = document.querySelectorAll('input[type=checkbox]');
-// const finalCostDisplay = document.getElementById('activities-cost')
-
-// code testing area -----------------------------------
-
-// checkboxes[1].disabled = true;
-// checkboxes[1].parentNode.classList.add('disabled');
-// const cost = checkboxes[0].getAttribute('data-cost');
-// console.log(dateTime);
-// --------------------------------------------------------------------
-
-//Register for Activities Section
-
-// activities.addEventListener('change', (e) =>{
-// // let selectedActivity = e.target;
-// let selectedActivityCost = parseInt(e.target.getAttribute('data-cost'));
-
-// if(e.target.checked == true){
-//     totalCost += selectedActivityCost;
-//     // console.log(totalCost);
-//     for(let i = 0; i < checkboxes.length ; i++){
-//         // disabled overlapping activities
-//         if(e.target.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-ant-time')){
-//             // checkboxes[i].parentElement.classList.add('disabled');
-//             checkboxes[i].disabled = true;
-//             e.target.parentElement.classList.remove('disabled');
-//             e.target.disabled = false;
-//         }
-//     }
-// } else if (e.target.checked == false){
-//     totalCost -= selectedActivityCost;
-//     for(let i = 0 ; i < checkboxes.length ; i++){
-//         if(e.target.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-ant-time')){
-//             checkboxes[i].parentElement.classList.remove('disabled');
-//             checkboxes[i].disabled = false; 
-//         }
-//     }
-
-// }
-
-//    // formatCost();
-//    finalCostDisplay.innerHTML = `Total: $${totalCost}`;
-      
-// //    activitiesValidate(e); 
-
-// });
-
-
+// Register for activities section --------------------------------------------------------------------
 const allActivities = document.getElementById('activities');
 // console.log(allActivities);
 const finalCostDisplay = document.querySelector('#activities-cost');
@@ -125,6 +75,5 @@ allActivities.addEventListener('change', (e) => {
     // Display total cost 
     finalCostDisplay.innerHTML = `Total: $${totalCost}`;
       
-    // activitiesValidate(e);
 
 });
