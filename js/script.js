@@ -47,6 +47,9 @@ const finalCostDisplay = document.querySelector('#activities-cost');
 const checkboxes = allActivities.querySelectorAll('input[type=checkbox]');
 let totalCost = 0;
 
+// When a workshop is selected, the cost will be added to the total cost,  other workshops with the same date and time are not allowed to select, 
+// and the checkbox will be disabled. 
+
 allActivities.addEventListener('change', (e) => {
     let selectedActivity = e.target;
     const activityCost = parseInt(selectedActivity.getAttribute('data-cost'));
@@ -73,22 +76,42 @@ allActivities.addEventListener('change', (e) => {
             }
         }
     }
-    // Display total cost 
+    // Display the innerHTML of the "Total:" <p> element with the new total cost. 
     finalCostDisplay.innerHTML = `Total: $${totalCost}`;     
 
 });
 
 // Payment Info Section --------------------------------------------------------------------
 const paymentOptions = document.getElementById('payment');
-// console.log(paymentOptions[0].value)
-//The credit card payment option should be selected for the user by default.
-for(let i = 0; i < paymentOptions.length; i++){
-    if(paymentOptions[i].value == 'credit-card'){
-        paymentOptions[i].hidden = false;
-    }else {
-        paymentOptions[i].hidden = true;
+const creditcard = document.getElementById('credit-card');
+const paypal = document.getElementById('paypal');
+const bitcoin = document.getElementById('bitcoin');
+
+
+//The credit card payment option is selected for the user by default. 
+// paypal and bitcoin sections are hidden when the form first loads
+paymentOptions.children[1].setAttribute('selected','');
+// console.log(paypal.getAttribute('id'));
+paypal.style.display= "none";
+bitcoin.style.display= "none";
+
+
+// I put creditcard, paypal and bitcoin in an array called payArray. 
+// I will use payArray in the for loop in addEventListener section. :)
+const payArray = [creditcard, paypal, bitcoin];
+// console.log(payArray[0].getAttribute('id'));
+
+// Display the payment method based on the selected payment option.
+paymentOptions.addEventListener('change', (e)=>{
+    const selectedPayment = e.target;
+
+    for(let i = 0; i < payArray.length; i++){
+        if(selectedPayment.value == payArray[i].getAttribute('id')){
+            payArray[i].style.display = 'block';
+
+        } else {
+            payArray[i].style.display = 'none';
+        }       
     }
-}
 
-
-
+});
