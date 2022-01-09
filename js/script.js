@@ -114,56 +114,80 @@ paymentOptions.addEventListener('change', (e)=>{
     }
 });
 
-// Form validation----------------------------------------------------------------------------------
-// when "Register" button is clicked, display error messages (hint messages) if the required field is empty or invalid.
 
-// Name and Email Adress fields are required!
-let nameRequired = document.getElementById('name');
-console.log(nameRequired.value);
-let emailRequired = document.getElementById('email');
 
-// Use addEventListener() method to attach a "keyup" event to an input element.
-nameRequired.addEventListener("keyup", () =>{
-    nameValidate();
+// Form Validation section---------------------------------------------------------------------------------------
+
+// Validate input name
+
+let inputName = document.getElementById('name');
+let nameRegex =  /^[a-zA-Z]+\s?[a-zA-Z]+$/;    //accept first name or full name
+
+
+// // // Use addEventListener() method to attach a "keyup" event to an input element.
+inputName.addEventListener("keyup", () =>{
+    validateName();
 })
-   
-emailRequired.addEventListener("keyup", () => {
-    emailValidate();
-});
 
-function nameValidate(){
-    if(nameRequired.value){
-       nameRequired.parentNode.classList.add('valid');
+function validateName(){  
+    if(nameRegex.test(inputName.value)==true ){
+       inputName.parentNode.classList.add('valid');
     //name hint message is the last child of nameRequired.parentNode.
     //Learn more from: https://www.w3schools.com/jsref/prop_element_lastelementchild.asp 
-       nameRequired.parentNode.lastElementChild.style.display = 'none';
+    inputName.parentNode.lastElementChild.style.display = 'none';
        return true; 
     } else {
-       nameRequired.parentNode.classList.add('not-valid');
-       nameRequired.parentNode.lastElementChild.style.display = 'block';
-       return false; 
+        inputName.parentNode.classList.add('not-valid');
+        inputName.parentNode.lastElementChild.style.display = 'block';
+        return false; 
+    }
+};
+
+// Validate email address
+let inputEmail = document.getElementById('email');
+let emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{3}$/i;
+
+inputEmail.addEventListener("keyup", () => {
+    validateEmail();
+});
+
+function validateEmail(){
+     if(inputEmail.value && emailRegex.test(inputEmail.value)){
+        inputEmail.parentNode.classList.add('valid');
+        inputEmail.parentNode.lastElementChild.style.display = 'none';
+        return true;
+
+    } else {
+        if(!inputEmail.value){
+            inputEmail.parentNode.lastElementChild.textContent = 'Email address field cannot be blank'; 
+        } else{
+            inputEmail.parentNode.lastElementChild.style.display = 'block';
+        }
+      inputEmail.parentNode.classList.add('not-valid');
+      inputEmail.parentNode.lastElementChild.style.display = 'block';
+    //   inputEmail.focus();
+      return false;
     }
 };
 
 
 
-// function emailValidate(){
-//     if(nameRequired.value){
-
-//     }
-
-// }
 
 
 
 
-let registerButton = document.querySelector('button');
-// console.log(registerButton.textContent)
-registerButton.addEventListener('submit', (e)=>{
-    if(!nameValidate()){
+//Submit form --- when "Register" button is clicked, display error messages (hint messages) if the required field is empty or invalid.
+let registerForm = document.querySelector('.container');
+
+registerForm.addEventListener('submit', (e) => {
+
+    //  input name
+    if (!validateName()) {
         e.preventDefault();
-    }
-
+    }  
+    //  input email
+    if (!validateEmail()) {
+        e.preventDefault();
+    }  
+  
 });
-
-
