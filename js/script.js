@@ -16,6 +16,7 @@ document.getElementById('title').addEventListener('change', (e)=>{
     }
 });
 
+
 // T-Short info section -------------------------------------------------------------------------
 // "Color" drop down menu are not available for each t-shirt when the form first loads
 const colors = document.getElementById('color');
@@ -62,8 +63,7 @@ allActivities.addEventListener('change', (e) => {
                 checkboxes[i].disabled = true;
                 checkboxes[i].parentNode.classList.add('disabled');      
                 selectedActivity.disabled = false;
-                selectedActivity.parentNode.classList.remove('disabled');
-                                       
+                selectedActivity.parentNode.classList.remove('disabled');                                       
             }
         }
     } else if (selectedActivity.checked == false) {
@@ -91,7 +91,6 @@ const bitcoin = document.getElementById('bitcoin');
 //The credit card payment option is selected for the user by default. 
 // paypal and bitcoin sections are hidden when the form first loads
 paymentOptions.children[1].setAttribute('selected','');
-// console.log(paypal.getAttribute('id'));
 paypal.style.display= "none";
 bitcoin.style.display= "none";
 
@@ -113,5 +112,58 @@ paymentOptions.addEventListener('change', (e)=>{
             payArray[i].style.display = 'none';
         }       
     }
+});
+
+// Form validation----------------------------------------------------------------------------------
+// when "Register" button is clicked, display error messages (hint messages) if the required field is empty or invalid.
+
+// Name and Email Adress fields are required!
+let nameRequired = document.getElementById('name');
+console.log(nameRequired.value);
+let emailRequired = document.getElementById('email');
+
+// Use addEventListener() method to attach a "keyup" event to an input element.
+nameRequired.addEventListener("keyup", () =>{
+    nameValidate();
+})
+   
+emailRequired.addEventListener("keyup", () => {
+    emailValidate();
+});
+
+function nameValidate(){
+    if(nameRequired.value){
+       nameRequired.parentNode.classList.add('valid');
+    //name hint message is the last child of nameRequired.parentNode.
+    //Learn more from: https://www.w3schools.com/jsref/prop_element_lastelementchild.asp 
+       nameRequired.parentNode.lastElementChild.style.display = 'none';
+       return true; 
+    } else {
+       nameRequired.parentNode.classList.add('not-valid');
+       nameRequired.parentNode.lastElementChild.style.display = 'block';
+       return false; 
+    }
+};
+
+
+
+// function emailValidate(){
+//     if(nameRequired.value){
+
+//     }
+
+// }
+
+
+
+
+let registerButton = document.querySelector('button');
+// console.log(registerButton.textContent)
+registerButton.addEventListener('submit', (e)=>{
+    if(!nameValidate()){
+        e.preventDefault();
+    }
 
 });
+
+
