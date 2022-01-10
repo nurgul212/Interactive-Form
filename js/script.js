@@ -43,7 +43,6 @@ document.getElementById('design').addEventListener('change', (e) =>{
 
 // Register for activities section --------------------------------------------------------------------
 const allActivities = document.getElementById('activities');
-// console.log(allActivities);
 const finalCostDisplay = document.querySelector('#activities-cost');
 const checkboxes = allActivities.querySelectorAll('input[type=checkbox]');
 let totalCost = 0;
@@ -72,12 +71,13 @@ allActivities.addEventListener('change', (e) => {
         for (let i = 0; i < checkboxes.length; i++) {
             if (selectedActivity.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-and-time') ) {
                 checkboxes[i].disabled = false;
-                checkboxes[i].parentNode.classList.remove('disabled');               
+                checkboxes[i].parentNode.classList.remove('disabled');            
             }
         }
     }
     // Display the innerHTML of the "Total:" <p> element with the new total cost. 
-    finalCostDisplay.innerHTML = `Total: $${totalCost}`;     
+    finalCostDisplay.innerHTML = `Total: $${totalCost}`;   
+    validateActivity();  
 
 });
 
@@ -124,20 +124,20 @@ let inputName = document.getElementById('name');
 let nameRegex =  /^[a-zA-Z]+\s?[a-zA-Z]+$/;    //accept first name or full name
 
 
-// // // Use addEventListener() method to attach a "keyup" event to an input element.
+//  Use addEventListener() method to attach a "keyup" event to an input element.
 inputName.addEventListener("keyup", () =>{
     validateName();
 })
 
 function validateName(){  
-    if(nameRegex.test(inputName.value)==true ){
-       inputName.parentNode.classList.add('valid');
+    if(nameRegex.test(inputName.value)== true ){
+       inputName.parentNode.className='valid';
     //name hint message is the last child of nameRequired.parentNode.
     //Learn more from: https://www.w3schools.com/jsref/prop_element_lastelementchild.asp 
     inputName.parentNode.lastElementChild.style.display = 'none';
        return true; 
     } else {
-        inputName.parentNode.classList.add('not-valid');
+        inputName.parentNode.className='not-valid';
         inputName.parentNode.lastElementChild.style.display = 'block';
         return false; 
     }
@@ -145,7 +145,7 @@ function validateName(){
 
 // Validate email address
 let inputEmail = document.getElementById('email');
-let emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{3}$/i;
+let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 inputEmail.addEventListener("keyup", () => {
     validateEmail();
@@ -153,27 +153,51 @@ inputEmail.addEventListener("keyup", () => {
 
 function validateEmail(){
      if(inputEmail.value && emailRegex.test(inputEmail.value)){
-        inputEmail.parentNode.classList.add('valid');
+        // inputEmail.parentNode.classList.add('valid');
+        inputEmail.parentNode.className='valid';
         inputEmail.parentNode.lastElementChild.style.display = 'none';
         return true;
 
     } else {
-        if(!inputEmail.value){
-            inputEmail.parentNode.lastElementChild.textContent = 'Email address field cannot be blank'; 
-        } else{
+        if(inputEmail.value){
             inputEmail.parentNode.lastElementChild.style.display = 'block';
+            // inputEmail.nextElementSibling.textContent = 'Email address must be formatted correctly';
+           
+        } else{
+            inputEmail.parentNode.lastElementChild.textContent = 'Email address field cannot be blank';   
+            // inputEmail.nextElementSibling.textContent = 'Please enter your email';
         }
       inputEmail.parentNode.classList.add('not-valid');
       inputEmail.parentNode.lastElementChild.style.display = 'block';
-    //   inputEmail.focus();
+      inputEmail.focus();
       return false;
     }
 };
 
 
+// validate activity section. at least one activity should be selected. 
 
+const activityList = document.querySelectorAll('#activities input');
+// console.log(activityList.length);
+function validateActivity(){
+    let count = 0;   //count the number of selected activities
+    for(let i = 0; i < activityList.length; i++){
+        if(activityList[i].checked == true){
+            count += 1;
+        }
+       
+    }
+    if(count !== 0){
+       allActivities.firstElementChild.classNmae='valid';
+       allActivities.lastElementChild.style.display='none';
+       return true; 
+    } else{
+        allActivities.firstElementChild.className='not-valid';
+        allActivities.lastElementChild.style.display='block';
+        return false;
+    }
 
-
+};
 
 
 //Submit form --- when "Register" button is clicked, display error messages (hint messages) if the required field is empty or invalid.
@@ -183,11 +207,16 @@ registerForm.addEventListener('submit', (e) => {
 
     //  input name
     if (!validateName()) {
+        // if the event does not get explicitly handled, prevent from taking the default action 
         e.preventDefault();
     }  
     //  input email
     if (!validateEmail()) {
         e.preventDefault();
-    }  
+    } 
+     //  Activity list
+     if (!validateActivity()) {
+        e.preventDefault();
+    }   
   
 });
