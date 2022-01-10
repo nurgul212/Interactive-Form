@@ -137,6 +137,9 @@ function validateName(){
     inputName.parentNode.lastElementChild.style.display = 'none';
        return true; 
     } else {
+        if(inputName.value){
+            inputName.parentNode.lastElementChild.textContent = 'Name should not contain numbers or punctuation.';
+        }
         inputName.parentNode.className='not-valid';
         inputName.parentNode.lastElementChild.style.display = 'block';
         return false; 
@@ -169,7 +172,6 @@ function validateEmail(){
         }
       inputEmail.parentNode.classList.add('not-valid');
       inputEmail.parentNode.lastElementChild.style.display = 'block';
-      inputEmail.focus();
       return false;
     }
 };
