@@ -1,4 +1,3 @@
-# 1/11/2022 -- Nurgul Amat
 
 ## Treehouse Techdegree: FSJS Project 3 - Interactive Form
 
