@@ -34,7 +34,7 @@ function validateName(){
 };
 
 
-//==== Email Address* field===============================================================
+//==== Email Address* field===========================================================
 
 // Validate email address
 let inputEmail = document.getElementById('email');
@@ -64,7 +64,7 @@ function validateEmail(){
 };
 
 
-//==== Job Role field=========================================================================
+//==== Job Role field=======================================================================
 // #other-job-role is hidden when the form first loads 
 const otherOption = document.getElementById('other-job-role');
 otherOption.style.display='none';
@@ -111,8 +111,8 @@ document.getElementById('design').addEventListener('change', (e) =>{
 
 
 
-//****************************************** Register for Activities Section **********************************************************//
-//************************************************************************************************************************************//
+//****************************************** Register for Activities Section *****************************************************//
+//*********************************************************************************************************************************//
 
 const allActivities = document.getElementById('activities');
 const finalCostDisplay = document.querySelector('#activities-cost');
@@ -294,7 +294,7 @@ function validatecvv(){
 } 
 
 
-//****************************************** Form Register *******************************************************************//
+//************************************************* Form Register *******************************************************************//
 //************************************************************************************************************************************//
 
 //Submit form --- when "Register" button is clicked, display error messages (hint messages) if the required field is empty or invalid.
@@ -316,15 +316,17 @@ registerForm.addEventListener('submit', (e) => {
         e.preventDefault();
     }  
     // Credit card number
-    if (!validateCreditNum()) {
-        e.preventDefault();
-    }   
-    // zip code
-    if (!validateZip()) {
-        e.preventDefault();
-    }   
-     // cvv code
-     if (!validatecvv()) {
-        e.preventDefault();
-    } 
+    if(paymentOptions.value == 'credit-card'){
+        if (!validateCreditNum()) {
+            e.preventDefault();
+        }   
+        // zip code
+        if (!validateZip()) {
+            e.preventDefault();
+        }   
+        // cvv code
+        if (!validatecvv()) {
+            e.preventDefault();
+        } 
+    }
 });
