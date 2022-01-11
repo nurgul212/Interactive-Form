@@ -22,4 +22,4 @@ https://nurgul212.github.io/Interactive-Form/
 
 ### Future Challenge
 I would like to add the following feature:
--  Display an alert message `Thanks for registereting for Full Stack Conference! You are all set.` when `submit` button is clicked after all required field are filled out.
+-  Display an alert message ` "Thanks for registereting for Full Stack Conference! You are all set." ` when `submit` button is clicked after all required field are filled out.
