@@ -9,9 +9,9 @@ In this project, I used Javascript to enhance an interactive registration form f
 - JavaScript 
 - Regular Expressions (Regex)
 
-Using the supplied HTML and CSS files to add my own JAvascript to make the form more user-friendly. 
+Using the supplied HTML and CSS files to add my own JavaScript to make the form more user-friendly. 
 
-### Features
+### Features:
 - There is customized and conditional behavior and interactivity.
 - Validation on name field, email, activity field, credit card number, zip code and cvv code.
 - All fields are fully validated user input in real time and provide helpful error message when the user enters invalid informaiton .

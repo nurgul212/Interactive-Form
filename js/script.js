@@ -1,7 +1,70 @@
-// Badic info section ----------------------------------------------------------------------
+//****************************************** Basic Info Section **********************************************************//
+//************************************************************************************************************************//
+
+//==== Name* field=============================================================
+
 // Use focus() method for the "Name" field 
 document.getElementById('name').focus();
 
+// Validate input name
+let inputName = document.getElementById('name');
+let nameRegex =  /^[a-zA-Z]+\s?[a-zA-Z]+$/;    //accept first name or full name
+
+//  Use addEventListener() method to attach a "keyup" event to an input element.
+inputName.addEventListener("keyup", () =>{
+    validateName();
+})
+
+function validateName(){  
+    // if exist and the nameRegex is valid
+    if(inputName.value && nameRegex.test(inputName.value)){
+       inputName.parentNode.className='valid';
+    //name hint message is the last child of nameRequired.parentNode.
+    //Learn more from: https://www.w3schools.com/jsref/prop_element_lastelementchild.asp 
+    inputName.parentNode.lastElementChild.style.display = 'none';
+       return true; 
+    } else {
+        if(inputName.value){
+            inputName.parentNode.lastElementChild.textContent = 'Name should not contain numbers or punctuation';
+        }
+        inputName.parentNode.className='not-valid';
+        inputName.parentNode.lastElementChild.style.display = 'block';
+        return false; 
+    }
+};
+
+
+//==== Email Address* field===============================================================
+
+// Validate email address
+let inputEmail = document.getElementById('email');
+let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+inputEmail.addEventListener("keyup", () => {
+    validateEmail();
+});
+
+function validateEmail(){
+     if(inputEmail.value && emailRegex.test(inputEmail.value)){
+        inputEmail.parentNode.className='valid';
+        inputEmail.parentNode.lastElementChild.style.display = 'none';
+        return true;
+
+    } else {
+        if(inputEmail.value){
+            inputEmail.parentNode.lastElementChild.textContent = 'Email address must be formatted correctly';
+           
+        } else{
+            inputEmail.parentNode.lastElementChild.textContent = 'Email address field cannot be blank';   
+        }
+      inputEmail.parentNode.className='not-valid';
+      inputEmail.parentNode.lastElementChild.style.display = 'block';
+      return false;
+    }
+};
+
+
+//==== Job Role field=========================================================================
 // #other-job-role is hidden when the form first loads 
 const otherOption = document.getElementById('other-job-role');
 otherOption.style.display='none';
@@ -17,7 +80,12 @@ document.getElementById('title').addEventListener('change', (e)=>{
 });
 
 
-// T-Short info section -------------------------------------------------------------------------
+
+//****************************************** T-Shirt Info Section **********************************************************//
+//*************************************************************************************************************************//
+
+//==== Design and Color========================================================================= 
+
 // "Color" drop down menu are not available for each t-shirt when the form first loads
 const colors = document.getElementById('color');
 // console.log(colors.value);  returns 'Select a design theme above'
@@ -41,11 +109,16 @@ document.getElementById('design').addEventListener('change', (e) =>{
     
 });
 
-// Register for activities section --------------------------------------------------------------------
+
+
+//****************************************** Register for Activities Section **********************************************************//
+//************************************************************************************************************************************//
+
 const allActivities = document.getElementById('activities');
 const finalCostDisplay = document.querySelector('#activities-cost');
 const checkboxes = allActivities.querySelectorAll('input[type=checkbox]');
 let totalCost = 0;
+
 
 // When a workshop is selected, the cost will be added to the total cost,  other workshops with the same date and time are not allowed to select, 
 // and the checkbox will be disabled. 
@@ -63,7 +136,9 @@ allActivities.addEventListener('change', (e) => {
                 checkboxes[i].disabled = true;
                 checkboxes[i].parentNode.classList.add('disabled');      
                 selectedActivity.disabled = false;
-                selectedActivity.parentNode.classList.remove('disabled');                                       
+                selectedActivity.parentNode.classList.remove('disabled'); 
+                selectedActivity.parentNode.classList.add('focus'); 
+
             }
         }
     } else if (selectedActivity.checked == false) {
@@ -72,7 +147,8 @@ allActivities.addEventListener('change', (e) => {
         for (let i = 0; i < checkboxes.length; i++) {
             if (selectedActivity.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-and-time') ) {
                 checkboxes[i].disabled = false;
-                checkboxes[i].parentNode.classList.remove('disabled');          
+                checkboxes[i].parentNode.classList.remove('disabled'); 
+                selectedActivity.parentNode.classList.remove('focus');          
             }
         }
     }
@@ -82,19 +158,32 @@ allActivities.addEventListener('change', (e) => {
 
 });
 
-// add focus state indicators :  https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event
-allActivities.addEventListener('focus', (e) => {
-    e.target.parentNode.className = 'focus';
-}, true);
+// validate activity section. at least one activity should be selected. 
+const activityList = document.querySelectorAll('#activities input');
+// console.log(activityList.length);
+function validateActivity(){
+    let count = 0;   //count the number of selected activities
+    for(let i = 0; i < activityList.length; i++){
+        if(activityList[i].checked == true){
+            count += 1;
+        }       
+    }
+    if(count !== 0){
+       allActivities.firstElementChild.className='valid';
+       allActivities.lastElementChild.style.display='none';
+       return true; 
+    } else{
+        allActivities.firstElementChild.className='not-valid';
+        allActivities.lastElementChild.style.display='block';
+        return false;
+    }
 
-// remove focus state indicators 
-// allActivities.addEventListener('blur', (e) => {
-//     e.target.parentNode.className='';
-// }, true);
+};
 
 
+//****************************************** Payment Info Section *******************************************************************//
+//************************************************************************************************************************************//
 
-// Payment Info Section --------------------------------------------------------------------
 const paymentOptions = document.getElementById('payment');
 const creditcard = document.getElementById('credit-card');
 const paypal = document.getElementById('paypal');
@@ -128,90 +217,7 @@ paymentOptions.addEventListener('change', (e)=>{
 });
 
 
-
-// Form Validation section---------------------------------------------------------------------------------------
-
-// Validate input name
-
-let inputName = document.getElementById('name');
-let nameRegex =  /^[a-zA-Z]+\s?[a-zA-Z]+$/;    //accept first name or full name
-
-
-//  Use addEventListener() method to attach a "keyup" event to an input element.
-inputName.addEventListener("keyup", () =>{
-    validateName();
-})
-
-function validateName(){  
-    // if exist and the nameRegex is valid
-    if(inputName.value && nameRegex.test(inputName.value)){
-       inputName.parentNode.className='valid';
-    //name hint message is the last child of nameRequired.parentNode.
-    //Learn more from: https://www.w3schools.com/jsref/prop_element_lastelementchild.asp 
-    inputName.parentNode.lastElementChild.style.display = 'none';
-       return true; 
-    } else {
-        if(inputName.value){
-            inputName.parentNode.lastElementChild.textContent = 'Name should not contain numbers or punctuation';
-        }
-        inputName.parentNode.className='not-valid';
-        inputName.parentNode.lastElementChild.style.display = 'block';
-        return false; 
-    }
-};
-
-// Validate email address
-let inputEmail = document.getElementById('email');
-let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-inputEmail.addEventListener("keyup", () => {
-    validateEmail();
-});
-
-function validateEmail(){
-     if(inputEmail.value && emailRegex.test(inputEmail.value)){
-        inputEmail.parentNode.className='valid';
-        inputEmail.parentNode.lastElementChild.style.display = 'none';
-        return true;
-
-    } else {
-        if(inputEmail.value){
-            inputEmail.parentNode.lastElementChild.textContent = 'Email address must be formatted correctly';
-           
-        } else{
-            inputEmail.parentNode.lastElementChild.textContent = 'Email address field cannot be blank';   
-        }
-      inputEmail.parentNode.className='not-valid';
-      inputEmail.parentNode.lastElementChild.style.display = 'block';
-      return false;
-    }
-};
-
-
-// validate activity section. at least one activity should be selected. 
-
-const activityList = document.querySelectorAll('#activities input');
-// console.log(activityList.length);
-function validateActivity(){
-    let count = 0;   //count the number of selected activities
-    for(let i = 0; i < activityList.length; i++){
-        if(activityList[i].checked == true){
-            count += 1;
-        }       
-    }
-    if(count !== 0){
-       allActivities.firstElementChild.className='valid';
-       allActivities.lastElementChild.style.display='none';
-       return true; 
-    } else{
-        allActivities.firstElementChild.className='not-valid';
-        allActivities.lastElementChild.style.display='block';
-        return false;
-    }
-
-};
-
-// Validate Credit card number, zip code and CVV 
+// Validate Credit card number, zip code and CVV ======================================= 
 
 // credit card number should have between 13-16 digits 
 let  creditNumRegex =/^[0-9]{13,16}$/;
@@ -288,6 +294,9 @@ function validatecvv(){
 } 
 
 
+//****************************************** Form Register *******************************************************************//
+//************************************************************************************************************************************//
+
 //Submit form --- when "Register" button is clicked, display error messages (hint messages) if the required field is empty or invalid.
 let registerForm = document.querySelector('.container');
 
@@ -318,6 +327,4 @@ registerForm.addEventListener('submit', (e) => {
      if (!validatecvv()) {
         e.preventDefault();
     } 
-    // Refresh the page when the submit button is clicked.
-//    location.reload();
 });
