@@ -120,43 +120,57 @@ const checkboxes = allActivities.querySelectorAll('input[type=checkbox]');
 let totalCost = 0;
 
 
-// When a workshop is selected, the cost will be added to the total cost,  other workshops with the same date and time are not allowed to select, 
-// and the checkbox will be disabled. 
+//When a workshop is selected, the cost will be added to the total cost.
+//  add or subtract activity costs to the total cost based on the selection of activities
 
+allActivities.addEventListener('change', (e) =>{
+    let selectedActivity = e.target;
+    let activityCost = parseInt(selectedActivity.getAttribute('data-cost'));
+    if (selectedActivity.checked == true){
+        totalCost += activityCost;
+    } else {
+        totalCost -= activityCost;
+    }
+
+ // Display the innerHTML of the "Total:" <p> element with the new total cost. 
+    finalCostDisplay.innerHTML = `Total: $ ${totalCost}`;  
+   
+});
+
+// / Adding focus to activities for accessibility
+// Inside the loop, program each activity to listen for the focus event and the blur event.
+//  These are two separate events and will need to be added and defined separately, but within the same loop.
+for (let i=0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener('focus', (e) => {
+        e.target.parentElement.classList.add('focus');
+    });
+
+    checkboxes[i].addEventListener('blur', (e) => {
+        e.target.parentElement.classList.remove('focus');
+    });
+}
+
+
+//Conflicting activities are not allowed to select. only one activity can be selected, the conflicted one will be disabled.
 allActivities.addEventListener('change', (e) => {
     let selectedActivity = e.target;
-    const activityCost = parseInt(selectedActivity.getAttribute('data-cost'));
 
-    if (selectedActivity.checked == true) {
-        
-        totalCost += activityCost;
-        for (let i = 0; i < checkboxes.length; i++) {
-            // Hide overlapping activities
-            if (selectedActivity.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-and-time') ) {
+    for (i = 0; i < checkboxes.length; i++) {
+        if (selectedActivity  !== checkboxes[i]) {
+            if (selectedActivity.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-and-time')) {
                 checkboxes[i].disabled = true;
-                checkboxes[i].parentNode.classList.add('disabled');      
-                selectedActivity.disabled = false;
-                selectedActivity.parentNode.classList.remove('disabled'); 
-                selectedActivity.parentNode.classList.add('focus'); 
-
-            }
-        }
-    } else if (selectedActivity.checked == false) {
-        totalCost -= activityCost;
-        // Unhide overlpapping activities
-        for (let i = 0; i < checkboxes.length; i++) {
-            if (selectedActivity.getAttribute('data-day-and-time') == checkboxes[i].getAttribute('data-day-and-time') ) {
-                checkboxes[i].disabled = false;
-                checkboxes[i].parentNode.classList.remove('disabled'); 
-                selectedActivity.parentNode.classList.remove('focus');          
+                checkboxes[i].parentNode.className= 'disabled';
+            } 
+            if (selectedActivity.checked == false) {
+               checkboxes[i].disabled = false;
+               checkboxes[i].parentNode.classList.remove('disabled'); 
+               
             }
         }
     }
-    // Display the innerHTML of the "Total:" <p> element with the new total cost. 
-    finalCostDisplay.innerHTML = `Total: $${totalCost}`;   
-    validateActivity();  
-
+    validateActivity();
 });
+
 
 // validate activity section. at least one activity should be selected. 
 const activityList = document.querySelectorAll('#activities input');
@@ -179,6 +193,16 @@ function validateActivity(){
     }
 
 };
+
+// Adding focus to activities for accessibility
+for (let i=0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener('focus', e => {
+        e.target.parentElement.classList.add('focus');
+    });
+    checkboxes[i].addEventListener('blur', e => {
+        e.target.parentElement.classList.remove('focus');
+    });
+}
 
 
 //****************************************** Payment Info Section *******************************************************************//
