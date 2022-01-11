@@ -131,7 +131,8 @@ inputName.addEventListener("keyup", () =>{
 })
 
 function validateName(){  
-    if(nameRegex.test(inputName.value)== true ){
+    // if exist and the nameRegex is valid
+    if(inputName.value && nameRegex.test(inputName.value)){
        inputName.parentNode.className='valid';
     //name hint message is the last child of nameRequired.parentNode.
     //Learn more from: https://www.w3schools.com/jsref/prop_element_lastelementchild.asp 
@@ -275,7 +276,6 @@ function validatecvv(){
 } 
 
 
-
 //Submit form --- when "Register" button is clicked, display error messages (hint messages) if the required field is empty or invalid.
 let registerForm = document.querySelector('.container');
 
@@ -306,5 +306,6 @@ registerForm.addEventListener('submit', (e) => {
      if (!validatecvv()) {
         e.preventDefault();
     } 
-   
+    // Refresh the page when the submit button is clicked.
+   location.reload();
 });
