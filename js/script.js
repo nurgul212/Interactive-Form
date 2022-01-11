@@ -82,6 +82,18 @@ allActivities.addEventListener('change', (e) => {
 
 });
 
+// add focus state indicators :  https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event
+allActivities.addEventListener('focus', (e) => {
+    e.target.parentNode.className = 'focus';
+}, true);
+
+// remove focus state indicators 
+// allActivities.addEventListener('blur', (e) => {
+//     e.target.parentNode.className='';
+// }, true);
+
+
+
 // Payment Info Section --------------------------------------------------------------------
 const paymentOptions = document.getElementById('payment');
 const creditcard = document.getElementById('credit-card');
@@ -307,5 +319,5 @@ registerForm.addEventListener('submit', (e) => {
         e.preventDefault();
     } 
     // Refresh the page when the submit button is clicked.
-   location.reload();
+//    location.reload();
 });
