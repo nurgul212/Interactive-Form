@@ -1,5 +1,5 @@
 
-### FSJS Project 3 - Interactive Form ---Exceeds Expectation
+### FSJS Project 3 ---Exceeds Expectation
 
 In this project, I used Javascript to enhance an interactive registration form for Full Stack conference. 
 
