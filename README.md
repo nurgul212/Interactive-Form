@@ -1,7 +1,9 @@
 
 ### FSJS Project 3 ---Exceeds Expectation
-
 In this project, I used Javascript to enhance an interactive registration form for Full Stack conference. 
+
+### Click the following link to view the app:
+https://nurgul212.github.io/Interactive-Form/
 
 ### Languages & Techniques Used: 
 - HTML (provided)
@@ -16,9 +18,6 @@ Using the supplied HTML and CSS files to add my own JavaScript to make the form 
 - Validation on name field, email, activity field, credit card number, zip code and cvv code.
 - All fields are fully validated user input in real time and provide helpful error message when the user enters invalid informaiton .
 - The form can not be submitted unless all required fields are correctly filled out. 
-
-### Click the following link to view the app:
-https://nurgul212.github.io/Interactive-Form/
 
 ### Future Challenge
 I would like to add the following feature:
