@@ -2,9 +2,9 @@
 ### FSJS Project 3 ---Exceeds Expectation
 In this project, I used Javascript to enhance an interactive registration form for Full Stack conference. 
 
-### Click the following link to view the app:
-https://nurgul212.github.io/Interactive-Form/
 ## Project Sample Snapshot
+Click the following link to view the app:
+https://nurgul212.github.io/Interactive-Form/
 ![Screenshot 2024-02-02 161220](https://github.com/nurgul212/capstone-portfolio-project-9/assets/90399606/dec640be-73d3-41d8-a4f8-c59264280ba7)
 
 ### Languages & Techniques Used: 
